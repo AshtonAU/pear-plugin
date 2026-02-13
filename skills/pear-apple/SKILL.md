@@ -134,6 +134,7 @@ For scheduling, prefer `pear_find_best_time` over `pear_find_free_slots`:
 
 ### Reminders
 
+- Reminders are accessed via CalDAV (VTODO protocol) — basic operations work well (title, due date, priority, notes, completion). Modern Apple Reminders features like subtasks, tags, smart lists, and location-based reminders are not available via CalDAV.
 - Priority values: `1` = high, `5` = medium, `9` = low, `0` = none
 - To list only incomplete reminders, use `includeCompleted: false` (default)
 - Reminder lists are auto-created if they don't exist when using `listName`
