@@ -23,7 +23,7 @@ export PEAR_API_KEY=pear_sk_your_key_here
 
 **From GitHub:**
 ```
-/plugin marketplace add pear-dev/pear-plugin
+/plugin marketplace add AshtonAU/pear-plugin
 /plugin install pear@pear-marketplace
 ```
 
@@ -110,7 +110,7 @@ Claude Code                    Pear API                     iCloud
 
 - [Pear Documentation](https://pearmcp.com/docs)
 - [Pear Dashboard](https://pearmcp.com/dashboard)
-- [Report Issues](https://github.com/pear-dev/pear-plugin/issues)
+- [Report Issues](https://github.com/AshtonAU/pear-plugin/issues)
 
 ## License
 
