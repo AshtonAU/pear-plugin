@@ -1,0 +1,9 @@
+{
+  "pear": {
+    "type": "http",
+    "url": "${PEAR_MCP_URL:-https://pearmcp.com/api/mcp}",
+    "headers": {
+      "Authorization": "Bearer ${PEAR_API_KEY}"
+    }
+  }
+}

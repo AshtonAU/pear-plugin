@@ -1,0 +1,21 @@
+{
+  "name": "pear-marketplace",
+  "owner": {
+    "name": "Pear",
+    "email": "support@pearmcp.com"
+  },
+  "metadata": {
+    "description": "Official Pear plugins for iCloud Calendar, Reminders & Contacts integration",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "pear",
+      "source": ".",
+      "description": "iCloud Calendar, Reminders & Contacts integration. 27 MCP tools for managing events, reminders, contacts, daily briefings, and AI-powered scheduling via CalDAV/CardDAV. Requires a Pear account.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "tags": ["icloud", "apple", "calendar", "reminders", "contacts", "caldav", "carddav", "scheduling", "mcp"]
+    }
+  ]
+}
