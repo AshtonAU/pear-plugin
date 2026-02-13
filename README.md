@@ -1,87 +1,103 @@
-# Pear — iCloud Integration for Claude Code
+<div align="center">
 
-Give Claude read/write access to your **iCloud Calendar, Reminders & Contacts** through 27 MCP tools.
+# 🍐 Pear — iCloud for Claude Code
 
-Works cross-platform via CalDAV/CardDAV — no macOS required.
+**Give Claude read/write access to your iCloud Calendar, Reminders & Contacts.**
+
+27 MCP tools · Cross-platform · No macOS required
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![MCP Tools](https://img.shields.io/badge/MCP_Tools-27-blue.svg)](https://pearmcp.com/docs)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-1.0.33+-purple.svg)](https://docs.anthropic.com/en/docs/claude-code)
+
+[Get Started](https://pearmcp.com) · [Documentation](https://pearmcp.com/docs) · [Dashboard](https://pearmcp.com/dashboard)
+
+</div>
+
+---
+
+## What is Pear?
+
+Pear is an MCP server that connects Claude Code to your iCloud account. Ask Claude to check your calendar, create events, manage reminders, look up contacts — all through natural language.
+
+```
+> "What's on my calendar today?"
+> "Schedule a 45-minute meeting with Sarah this week"
+> "Remind me to submit the report by Friday"
+> "What's John's phone number?"
+> "Find me 3 free slots for a 2-hour workshop next week"
+```
+
+Works on **macOS, Linux, and Windows** via CalDAV/CardDAV — no Apple hardware required.
 
 ## Quick Start
 
 ### 1. Get a Pear API Key
 
-Sign up at [pearmcp.com](https://pearmcp.com), connect your iCloud account, and generate an API key.
+Sign up at **[pearmcp.com](https://pearmcp.com)**, connect your iCloud account, and generate an API key.
 
 > You'll need an [Apple app-specific password](https://support.apple.com/en-us/102654) to connect your iCloud account.
 
 ### 2. Set Your API Key
 
 ```bash
-# Add to your shell profile (.bashrc, .zshrc, etc.)
 export PEAR_API_KEY=pear_sk_your_key_here
 ```
 
-### 3. Install the Plugin
+### 3. Install
 
-**From GitHub:**
+**Option A — Claude Plugin:**
 ```
 /plugin marketplace add AshtonAU/pear-plugin
 /plugin install pear@pear-marketplace
 ```
 
-**Or add the MCP server directly:**
+**Option B — MCP Server (direct):**
 ```bash
 claude mcp add --transport http pear https://pearmcp.com/api/mcp \
   --header "Authorization: Bearer $PEAR_API_KEY"
 ```
 
-### 4. Verify Setup
+**Option C — OpenClaw Skill:**
+```bash
+clawhub install pear-apple
+```
+
+### 4. Verify
 
 ```
 /pear:pear-setup
 ```
 
-## What You Get
+## 27 MCP Tools
 
-### 27 MCP Tools
-
-| Domain | Tools | Capabilities |
-|--------|-------|-------------|
-| **Calendar** | 8 | List calendars, CRUD events, find free slots, check availability |
-| **Reminders** | 4 | CRUD reminders with priorities, due dates, completion |
-| **Contacts** | 9 | CRUD contacts, groups, photo management, search |
-| **Briefing** | 1 | Daily summary with contact-enriched attendees |
-| **Scheduling** | 1 | AI-scored optimal meeting times |
-| **Batch** | 4 | Bulk create/delete up to 50 items per call |
+| Domain | Tools | What You Can Do |
+|--------|:-----:|-----------------|
+| 📅 **Calendar** | 8 | List calendars, create/read/update/delete events, find free slots, check availability |
+| ✅ **Reminders** | 4 | Create/read/update/complete reminders with priorities and due dates |
+| 👤 **Contacts** | 9 | Full CRUD for contacts and groups, photo management, smart search |
+| 📋 **Briefing** | 1 | Daily summary with events, reminders, and contact-enriched attendees |
+| 🧠 **Scheduling** | 1 | AI-scored optimal meeting times based on preferences and conflicts |
+| ⚡ **Batch** | 4 | Bulk create/delete up to 50 items per call |
 
 ### Slash Commands
 
 | Command | Description |
 |---------|-------------|
-| `/pear:briefing` | Get today's events and reminders at a glance |
+| `/pear:briefing` | Today's events and reminders at a glance |
 | `/pear:schedule` | Find the best time for a meeting |
-| `/pear:pear-setup` | Verify your API key and iCloud connection |
+| `/pear:pear-setup` | Verify your connection |
 
-### Smart Features
+## Features
 
-- **Virtual Birthdays** — Birthday events generated from contact data
-- **AI Scheduling** — Scores time slots by work hours, preferences, and conflicts
-- **Attendee Resolution** — Names in events are matched to your contacts
-- **Batch Operations** — Create up to 50 events/reminders/contacts in one call
-- **Full Timezone Support** — IANA timezone handling across all operations
-
-## Examples
-
-```
-> What's on my calendar today?
-> Schedule a 45-minute meeting with Sarah this week
-> Remind me to submit the report by Friday
-> What's John's phone number?
-> Create a recurring weekly standup on Mondays at 9am
-> Find me 3 free slots for a 2-hour workshop next week
-```
+- **🎂 Virtual Birthdays** — Birthday events auto-generated from contact data
+- **🧠 AI Scheduling** — Scores time slots by work hours, preferences, and conflicts
+- **👥 Attendee Resolution** — Event attendees matched to your contacts automatically
+- **⚡ Batch Operations** — Create up to 50 events/reminders/contacts in one call
+- **🌍 Timezone Support** — Full IANA timezone handling across all operations
+- **🔒 Privacy First** — Your data is proxied in real-time, never stored on Pear's servers
 
 ## How It Works
-
-Pear acts as a secure bridge between Claude and iCloud:
 
 ```
 Claude Code                    Pear API                     iCloud
@@ -92,26 +108,27 @@ Claude Code                    Pear API                     iCloud
     │◀── MCP JSON-RPC ───────── │                            │
 ```
 
-## Data Access & Privacy
+## Privacy & Security
 
-- Pear reads and writes to your iCloud Calendar, Reminders, and Contacts
-- Your iCloud credentials are stored encrypted on Pear's servers, never shared with Claude
-- Claude only receives your `PEAR_API_KEY`, which authenticates to the Pear API
-- All data in transit is encrypted via HTTPS/TLS
-- Pear does not store your calendar or contact data — it proxies requests to iCloud in real time
+| Concern | How Pear Handles It |
+|---------|-------------------|
+| iCloud credentials | Encrypted at rest, never shared with Claude |
+| Calendar/contact data | Proxied in real-time, **not stored** on Pear servers |
+| API authentication | Bearer token (`PEAR_API_KEY`) — Claude never sees your Apple ID |
+| Data in transit | HTTPS/TLS everywhere |
 
 ## Requirements
 
-- A [Pear](https://pearmcp.com) account with a connected iCloud account
-- An Apple [app-specific password](https://support.apple.com/en-us/102654)
-- Claude Code 1.0.33+
+- A free [Pear](https://pearmcp.com) account
+- An Apple ID with an [app-specific password](https://support.apple.com/en-us/102654)
+- Claude Code 1.0.33+ (or any MCP-compatible client)
 
 ## Links
 
-- [Pear Documentation](https://pearmcp.com/docs)
-- [Pear Dashboard](https://pearmcp.com/dashboard)
-- [Report Issues](https://github.com/AshtonAU/pear-plugin/issues)
+- 🌐 [pearmcp.com](https://pearmcp.com) — Sign up & dashboard
+- 📖 [Documentation](https://pearmcp.com/docs)
+- 🐛 [Report Issues](https://github.com/AshtonAU/pear-plugin/issues)
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
