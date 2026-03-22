@@ -2,7 +2,7 @@
 
 # 🍐 Pear — iCloud for Claude Code
 
-**Give Claude read/write access to your iCloud Calendar, Reminders & Contacts.**
+**Official Claude plugin, slash commands, and OpenClaw skill for Pear.**
 
 27 MCP tools · Cross-platform · No macOS required
 
@@ -18,7 +18,7 @@
 
 ## What is Pear?
 
-Pear is an MCP server that connects Claude Code to your iCloud account. Ask Claude to check your calendar, create events, manage reminders, look up contacts — all through natural language.
+Pear is an MCP server that connects Claude Code to your iCloud account. Ask Claude to check your calendar, create events, manage reminders, look up contacts, and find meeting times through natural language.
 
 ```
 > "What's on my calendar today?"
@@ -30,7 +30,7 @@ Pear is an MCP server that connects Claude Code to your iCloud account. Ask Clau
 
 Works on **macOS, Linux, and Windows** via CalDAV/CardDAV — no Apple hardware required.
 
-## Quick Start
+## Install
 
 ### 1. Get a Pear API Key
 
@@ -44,7 +44,7 @@ Sign up at **[pearmcp.com](https://pearmcp.com)**, connect your iCloud account, 
 export PEAR_API_KEY=pear_sk_your_key_here
 ```
 
-### 3. Install
+### 3. Choose an install path
 
 **Option A — Claude Plugin:**
 ```
@@ -69,6 +69,25 @@ clawhub install pear-icloud
 /pear:pear-setup
 ```
 
+## What You Get
+
+- 27 MCP tools across Calendar, Reminders, Contacts, briefing, scheduling, and batch operations
+- Claude slash commands for common flows like setup, briefing, and scheduling
+- One OpenClaw skill for users who want the same Pear integration outside Claude Code
+- A direct MCP config via [.mcp.json](.mcp.json) for manual setups
+
+## Repo Layout
+
+This repo is intentionally small. Each top-level path maps to a specific client surface:
+
+| Path | Purpose |
+|------|---------|
+| [`.claude-plugin/`](.claude-plugin) | Claude plugin and marketplace metadata |
+| [`commands/`](commands) | Claude slash commands such as `/pear:briefing` |
+| [`skills/pear-icloud/`](skills/pear-icloud) | OpenClaw skill definition |
+| [`.mcp.json`](.mcp.json) | Direct MCP server config template |
+| [`README.md`](README.md) | User-facing install and usage guide |
+
 ## 27 MCP Tools
 
 | Domain | Tools | What You Can Do |
@@ -88,7 +107,7 @@ clawhub install pear-icloud
 | `/pear:schedule` | Find the best time for a meeting |
 | `/pear:pear-setup` | Verify your connection |
 
-## Features
+## Highlights
 
 - **🎂 Virtual Birthdays** — Birthday events auto-generated from contact data
 - **🧠 AI Scheduling** — Scores time slots by work hours, preferences, and conflicts
