@@ -8,7 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![MCP Tools](https://img.shields.io/badge/MCP_Tools-27-blue.svg)](https://pearmcp.com/docs)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-1.0.33+-purple.svg)](https://docs.anthropic.com/en/docs/claude-code)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-MCP_Compatible-purple.svg)](https://docs.anthropic.com/en/docs/claude-code)
 
 [Get Started](https://pearmcp.com) · [Documentation](https://pearmcp.com/docs) · [Dashboard](https://pearmcp.com/dashboard)
 
@@ -140,7 +140,7 @@ Claude Code                    Pear API                     iCloud
 
 - A free [Pear](https://pearmcp.com) account
 - An Apple ID with an [app-specific password](https://support.apple.com/en-us/102654)
-- Claude Code 1.0.33+ (or any MCP-compatible client)
+- Claude Code with MCP support (or any MCP-compatible client)
 
 ## Links
 
