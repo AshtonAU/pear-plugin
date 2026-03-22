@@ -92,7 +92,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 | `pear_list_contact_groups` | List all contact groups with member counts |
 | `pear_create_contact_group` | Create a new contact group |
 | `pear_add_contact_to_group` | Add a contact to a group by name or email |
-| `pear_update_contact_photo` | Update a contact's photo (Base64, data URI, or external URL) |
+| `pear_update_contact_photo` | Update a contact's photo (inline base64 or `data:image/...` URI) |
 
 ### Briefing (1 tool)
 
@@ -154,7 +154,8 @@ For scheduling, prefer `pear_find_best_time` over `pear_find_free_slots`:
 - `pear_update_contact` merges fields — it won't erase data you don't include in the update
 - Birthday format: `YYYY-MM-DD` for full date, `--MM-DD` for year-unknown
 - Phone/email can be a single string or an array for multiple entries
-- Contact photos accept Base64 or data URI format
+- Contact photos accept inline base64 or `data:image/...` URIs
+- Remote photo URLs are rejected for security reasons
 
 ### Virtual Birthdays
 

@@ -60,7 +60,7 @@ claude mcp add --transport http pear https://pearmcp.com/api/mcp \
 
 **Option C — OpenClaw Skill:**
 ```bash
-clawhub install pear-apple
+clawhub install pear-icloud
 ```
 
 ### 4. Verify
