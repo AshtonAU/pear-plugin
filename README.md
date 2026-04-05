@@ -4,10 +4,10 @@
 
 **Official Claude plugin, slash commands, and OpenClaw skill for Pear.**
 
-27 MCP tools · Cross-platform · No macOS required
+34 MCP tools · Calendar, Reminders, Contacts, and Mail · Cross-platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![MCP Tools](https://img.shields.io/badge/MCP_Tools-27-blue.svg)](https://pearmcp.com/docs)
+[![MCP Tools](https://img.shields.io/badge/MCP_Tools-34-blue.svg)](https://pearmcp.com/docs)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-MCP_Compatible-purple.svg)](https://docs.anthropic.com/en/docs/claude-code)
 
 [Get Started](https://pearmcp.com) · [Documentation](https://pearmcp.com/docs) · [Dashboard](https://pearmcp.com/dashboard)
@@ -18,17 +18,18 @@
 
 ## What is Pear?
 
-Pear is an MCP server that connects Claude Code to your iCloud account. Ask Claude to check your calendar, create events, manage reminders, look up contacts, and find meeting times through natural language.
+Pear is a hosted MCP server that connects Claude Code to your iCloud Calendar, Reminders, Contacts, and Mail. Ask Claude to check your schedule, create events, manage reminders, look up contacts, read inbox context, and find meeting times through natural language.
 
 ```
 > "What's on my calendar today?"
 > "Schedule a 45-minute meeting with Sarah this week"
 > "Remind me to submit the report by Friday"
 > "What's John's phone number?"
+> "Show me unread iCloud Mail from today"
 > "Find me 3 free slots for a 2-hour workshop next week"
 ```
 
-Works on **macOS, Linux, and Windows** via CalDAV/CardDAV — no Apple hardware required.
+Works on **macOS, Linux, and Windows** via CalDAV/CardDAV for Calendar, Reminders, and Contacts, plus IMAP/SMTP for iCloud Mail. No Apple hardware required.
 
 ## Install
 
@@ -37,6 +38,7 @@ Works on **macOS, Linux, and Windows** via CalDAV/CardDAV — no Apple hardware 
 Sign up at **[pearmcp.com](https://pearmcp.com)**, connect your iCloud account, and generate an API key.
 
 > You'll need an [Apple app-specific password](https://support.apple.com/en-us/102654) to connect your iCloud account.
+> If you want Mail support, connect using the real `@icloud.com` address or iCloud Mail custom-domain address tied to that mailbox.
 
 ### 2. Set Your API Key
 
@@ -60,7 +62,7 @@ claude mcp add --transport http pear https://pearmcp.com/api/mcp \
 
 **Option C — OpenClaw Skill:**
 ```bash
-clawhub install pear-icloud
+clawhub install ashtonau/pear-apple
 ```
 
 ### 4. Verify
@@ -69,9 +71,15 @@ clawhub install pear-icloud
 /pear:pear-setup
 ```
 
+Already installed the marketplace? Refresh it with:
+
+```bash
+/plugin marketplace update pear-marketplace
+```
+
 ## What You Get
 
-- 27 MCP tools across Calendar, Reminders, Contacts, briefing, scheduling, and batch operations
+- 34 MCP tools across Calendar, Reminders, Contacts, Mail, scheduling, and batch operations
 - Claude slash commands for common flows like setup, briefing, and scheduling
 - One OpenClaw skill for users who want the same Pear integration outside Claude Code
 - A direct MCP config via [.mcp.json](.mcp.json) for manual setups
@@ -88,16 +96,16 @@ This repo is intentionally small. Each top-level path maps to a specific client 
 | [`.mcp.json`](.mcp.json) | Direct MCP server config template |
 | [`README.md`](README.md) | User-facing install and usage guide |
 
-## 27 MCP Tools
+## 34 MCP Tools
 
 | Domain | Tools | What You Can Do |
 |--------|:-----:|-----------------|
 | 📅 **Calendar** | 8 | List calendars, create/read/update/delete events, find free slots, check availability |
-| ✅ **Reminders** | 4 | Create/read/update/complete reminders with priorities and due dates |
+| ✅ **Reminders** | 5 | Create/read/update/complete/delete reminders with priorities and due dates |
 | 👤 **Contacts** | 9 | Full CRUD for contacts and groups, photo management, smart search |
-| 📋 **Briefing** | 1 | Daily summary with events, reminders, and contact-enriched attendees |
 | 🧠 **Scheduling** | 1 | AI-scored optimal meeting times based on preferences and conflicts |
 | ⚡ **Batch** | 4 | Bulk create/delete up to 50 items per call |
+| ✉️ **Mail** | 7 | List folders, read email, send email, move, mark read/unread, and delete |
 
 ### Slash Commands
 
@@ -112,6 +120,7 @@ This repo is intentionally small. Each top-level path maps to a specific client 
 - **🎂 Virtual Birthdays** — Birthday events auto-generated from contact data
 - **🧠 AI Scheduling** — Scores time slots by work hours, preferences, and conflicts
 - **👥 Attendee Resolution** — Event attendees matched to your contacts automatically
+- **✉️ iCloud Mail** — Read inbox context, send replies, and manage email folders through the same hosted MCP endpoint
 - **⚡ Batch Operations** — Create up to 50 events/reminders/contacts in one call
 - **🌍 Timezone Support** — Full IANA timezone handling across all operations
 - **🔒 Privacy First** — Your data is proxied in real-time, never stored on Pear's servers
@@ -122,8 +131,8 @@ This repo is intentionally small. Each top-level path maps to a specific client 
 Claude Code                    Pear API                     iCloud
     │                             │                            │
     │── PEAR_API_KEY (Bearer) ──▶ │                            │
-    │                             │── CalDAV/CardDAV (TLS) ──▶ │
-    │                             │◀── Calendar/Contact data ──│
+    │                             │── CalDAV/CardDAV/IMAP/SMTP ─▶ │
+    │                             │◀── Calendar, Contacts, Reminders, Mail ─│
     │◀── MCP JSON-RPC ───────── │                            │
 ```
 
@@ -132,7 +141,7 @@ Claude Code                    Pear API                     iCloud
 | Concern | How Pear Handles It |
 |---------|-------------------|
 | iCloud credentials | Encrypted at rest, never shared with Claude |
-| Calendar/contact data | Proxied in real-time, **not stored** on Pear servers |
+| Calendar, reminders, contacts, and Mail data | Proxied in real-time, **not stored** on Pear servers |
 | API authentication | Bearer token (`PEAR_API_KEY`) — Claude never sees your Apple ID |
 | Data in transit | HTTPS/TLS everywhere |
 

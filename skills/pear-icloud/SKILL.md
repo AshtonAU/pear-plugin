@@ -1,6 +1,6 @@
 ---
-name: Pear - iCloud Calendar, Reminders & Contacts
-description: iCloud Calendar, Reminders & Contacts via Pear. Manage events, reminders, contacts, daily briefings, and AI scheduling. 27 tools for Apple iCloud via CalDAV/CardDAV.
+name: Pear - iCloud Calendar, Reminders, Contacts & Mail
+description: iCloud Calendar, Reminders, Contacts, and Mail via Pear. Manage events, reminders, contacts, inbox workflows, scheduling, and batch actions. 34 tools for Apple iCloud via CalDAV/CardDAV/IMAP/SMTP.
 homepage: https://pearmcp.com
 metadata:
   openclaw:
@@ -15,7 +15,7 @@ metadata:
 
 # Pear — iCloud Integration
 
-Pear provides read/write access to iCloud Calendar, Reminders, and Contacts through 27 MCP tools. All tools are prefixed with `pear_` and communicate with iCloud via CalDAV/CardDAV protocols.
+Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mail through 34 MCP tools. All tools are prefixed with `pear_` and communicate with iCloud via CalDAV/CardDAV for Calendar, Reminders, and Contacts, plus IMAP/SMTP for Mail.
 
 ## When to Use
 
@@ -24,8 +24,9 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 - Create, update, or delete calendar events
 - Manage reminders or to-do lists
 - Look up, create, or update contacts
+- Read, send, or organize iCloud Mail
 - Find free time slots or schedule meetings
-- Get a daily briefing of events and tasks
+- Build a daily briefing from events, reminders, and unread email
 - Check availability for a specific time
 - Work with contact groups
 - Perform bulk operations on events, reminders, or contacts
@@ -34,13 +35,14 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 - "What's on my calendar", "my schedule", "upcoming events"
 - "Remind me to", "add a reminder", "my tasks", "to-do"
 - "Find contact", "add a contact", "phone number for"
+- "Unread email", "inbox", "send an email", "reply to this email"
 - "Schedule a meeting", "find a time", "when am I free"
 - "Daily briefing", "what's today look like"
 - "Birthday", "anniversaries"
 
 **Do NOT activate for:**
 - Apple Notes (not supported — CalDAV only)
-- Apple Mail or iMessage
+- iMessage
 - iCloud Drive or file storage
 - Apple Music, Photos, or other non-PIM services
 - Local macOS Calendar.app scripting (Pear works cross-platform via API)
@@ -71,7 +73,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 | `pear_find_free_slots` | Find available time slots of a given duration |
 | `pear_check_availability` | Check if a specific time slot is free, returns conflicts |
 
-### Reminders (4 tools)
+### Reminders (5 tools)
 
 | Tool | Description |
 |------|-------------|
@@ -79,6 +81,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 | `pear_create_reminder` | Create a reminder with optional due date, priority (1=high, 5=med, 9=low), and notes |
 | `pear_update_reminder` | Update a reminder's properties |
 | `pear_complete_reminder` | Mark a reminder as completed |
+| `pear_delete_reminder` | Delete a reminder |
 
 ### Contacts (9 tools)
 
@@ -94,12 +97,6 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 | `pear_add_contact_to_group` | Add a contact to a group by name or email |
 | `pear_update_contact_photo` | Update a contact's photo (inline base64 or `data:image/...` URI) |
 
-### Briefing (1 tool)
-
-| Tool | Description |
-|------|-------------|
-| `pear_get_daily_briefing` | Get today's events and pending reminders in one call. Enriches attendees with contact data. |
-
 ### Scheduling (1 tool)
 
 | Tool | Description |
@@ -114,6 +111,18 @@ Pear provides read/write access to iCloud Calendar, Reminders, and Contacts thro
 | `pear_create_reminders_batch` | Create up to 50 reminders in one call |
 | `pear_create_contacts_batch` | Create up to 50 contacts in one call |
 | `pear_delete_contacts_batch` | Delete up to 50 contacts in one call |
+
+### Mail (7 tools)
+
+| Tool | Description |
+|------|-------------|
+| `pear_list_mail_folders` | List mail folders and mailboxes available in iCloud Mail |
+| `pear_list_emails` | List emails from a folder, with unread and query filters |
+| `pear_read_email` | Read the full content of an email |
+| `pear_send_email` | Send an email through iCloud Mail |
+| `pear_move_email` | Move an email between folders |
+| `pear_mark_email_read` | Mark an email as read or unread |
+| `pear_delete_email` | Delete an email by moving it to Trash |
 
 ## Workflow Guidelines
 
@@ -149,6 +158,14 @@ For scheduling, prefer `pear_find_best_time` over `pear_find_free_slots`:
 - To list only incomplete reminders, use `includeCompleted: false` (default)
 - Reminder lists are auto-created if they don't exist when using `listName`
 
+### Mail
+
+- Mail works through iCloud IMAP/SMTP, not through CalDAV/CardDAV
+- For Mail to work reliably, the user should onboard Pear with their real `@icloud.com` address or an iCloud Mail custom-domain address tied to the mailbox
+- `pear_list_emails` is best for inbox scans; use `query` and `unreadOnly` to keep results tight
+- `pear_read_email` gives full body content after you identify the message with `pear_list_emails`
+- `pear_send_email` supports `to`, `cc`, `bcc`, reply headers, and HTML/plain-text bodies
+
 ### Contacts
 
 - `pear_update_contact` merges fields — it won't erase data you don't include in the update
@@ -163,11 +180,12 @@ Pear generates all-day birthday events from contact birthday fields. These appea
 
 ### Daily Briefing
 
-`pear_get_daily_briefing` is the most efficient way to give the user an overview:
-- Returns today's events + pending reminders in a single call
-- Automatically enriches event attendees with contact details (name, email, phone)
-- Pass `timezone` for correct day boundaries
-- Pass `date` to get a briefing for a different day
+Pear does not currently expose a single dedicated briefing tool in the hosted MCP surface. Build daily briefings by combining:
+- `pear_list_events` for the chosen day
+- `pear_list_reminders` for incomplete tasks
+- `pear_list_emails` for unread inbox context when Mail matters
+
+The `/pear:briefing` command in this plugin already follows that pattern.
 
 ## Safety & Confirmation
 
@@ -211,8 +229,10 @@ Event creation failed mid-request or timed out:
 ### Morning Briefing
 ```
 User: "What's on my plate today?"
-→ Call pear_get_daily_briefing with timezone
-→ Summarize events chronologically, then pending reminders
+→ Call pear_list_events for today with timezone
+→ Call pear_list_reminders for incomplete tasks
+→ Optionally call pear_list_emails for unread inbox context
+→ Summarize events chronologically, then pending reminders, then important unread mail
 ```
 
 ### Schedule a Meeting

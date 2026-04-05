@@ -1,7 +1,7 @@
 {
   "name": "pear",
-  "description": "Official Pear integration for Claude Code. Connect iCloud Calendar, Reminders, and Contacts with 27 MCP tools via CalDAV/CardDAV.",
-  "version": "1.0.0",
+  "description": "Official Pear integration for Claude Code. Connect iCloud Calendar, Reminders, Contacts, and Mail with 34 MCP tools via CalDAV/CardDAV/IMAP/SMTP.",
+  "version": "1.1.0",
   "author": {
     "name": "Pear",
     "url": "https://pearmcp.com"
@@ -15,8 +15,11 @@
     "calendar",
     "reminders",
     "contacts",
+    "mail",
     "caldav",
     "carddav",
+    "imap",
+    "smtp",
     "scheduling",
     "briefing",
     "mcp",
