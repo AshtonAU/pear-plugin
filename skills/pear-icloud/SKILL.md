@@ -1,6 +1,6 @@
 ---
 name: Pear - iCloud Calendar, Reminders, Contacts & Mail
-description: iCloud Calendar, Reminders, Contacts, and Mail via Pear. Manage events, reminders, contacts, inbox workflows, scheduling, and batch actions. 34 tools for Apple iCloud via CalDAV/CardDAV/IMAP/SMTP.
+description: iCloud Calendar, Contacts, Mail, and legacy CalDAV reminders through Pear hosted MCP tools. Upgraded Apple Reminders are not supported. Tool availability depends on the connected account and permissions.
 homepage: https://pearmcp.com
 metadata:
   openclaw:
@@ -15,14 +15,16 @@ metadata:
 
 # Pear — iCloud Integration
 
-Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mail through 34 MCP tools. All tools are prefixed with `pear_` and communicate with iCloud via CalDAV/CardDAV for Calendar, Reminders, and Contacts, plus IMAP/SMTP for Mail.
+Pear provides hosted MCP access to iCloud Calendar, Contacts, Mail, and legacy CalDAV reminder data. Tools are prefixed with `pear_`. Calendar and legacy reminders use CalDAV; Contacts use CardDAV; Mail uses IMAP/SMTP. Apple's upgraded Reminders store is not accessible through this connection.
+
+The visible tool subset depends on connected providers, granted scopes, account readiness, plan, and enabled capabilities. Discover tools and their current schemas from the connected client before calling them. The examples below are not a complete or guaranteed tool catalogue; follow the write-approval workflow exposed by the connection. See the [current tool reference](https://pearmcp.com/mcp-tools).
 
 ## When to Use
 
 **Activate this skill when the user wants to:**
 - Check their schedule, upcoming events, or daily agenda
 - Create, update, or delete calendar events
-- Manage reminders or to-do lists
+- Manage legacy reminder data that Apple still exposes through CalDAV, with the limitation explained first
 - Look up, create, or update contacts
 - Read, send, or organize iCloud Mail
 - Find free time slots or schedule meetings
@@ -41,6 +43,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mai
 - "Birthday", "anniversaries"
 
 **Do NOT activate for:**
+- Apple's upgraded Reminders store (explain the legacy-only limitation instead of promising access)
 - Apple Notes (not supported — CalDAV only)
 - iMessage
 - iCloud Drive or file storage
@@ -60,7 +63,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mai
 
 ## Tool Reference
 
-### Events (8 tools)
+### Events
 
 | Tool | Description |
 |------|-------------|
@@ -73,7 +76,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mai
 | `pear_find_free_slots` | Find available time slots of a given duration |
 | `pear_check_availability` | Check if a specific time slot is free, returns conflicts |
 
-### Reminders (5 tools)
+### Legacy reminders
 
 | Tool | Description |
 |------|-------------|
@@ -83,7 +86,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mai
 | `pear_complete_reminder` | Mark a reminder as completed |
 | `pear_delete_reminder` | Delete a reminder |
 
-### Contacts (9 tools)
+### Contacts
 
 | Tool | Description |
 |------|-------------|
@@ -97,13 +100,13 @@ Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mai
 | `pear_add_contact_to_group` | Add a contact to a group by name or email |
 | `pear_update_contact_photo` | Update a contact's photo (inline base64 or `data:image/...` URI) |
 
-### Scheduling (1 tool)
+### Scheduling
 
 | Tool | Description |
 |------|-------------|
 | `pear_find_best_time` | AI-scored optimal meeting slots. Considers work hours, time-of-day preference, day-of-week preference, buffer time, and reminder deadlines. |
 
-### Batch Operations (4 tools)
+### Batch Operations
 
 | Tool | Description |
 |------|-------------|
@@ -112,7 +115,7 @@ Pear provides read/write access to iCloud Calendar, Reminders, Contacts, and Mai
 | `pear_create_contacts_batch` | Create up to 50 contacts in one call |
 | `pear_delete_contacts_batch` | Delete up to 50 contacts in one call |
 
-### Mail (7 tools)
+### Mail
 
 | Tool | Description |
 |------|-------------|
@@ -151,9 +154,11 @@ For scheduling, prefer `pear_find_best_time` over `pear_find_free_slots`:
 - Pass `preferences` to customize: `{ timeOfDay: "morning", focusTime: true, workHoursStart: 9, workHoursEnd: 17 }`
 - `pear_find_free_slots` is simpler — just returns raw available slots without scoring
 
-### Reminders
+### Legacy reminders
 
-- Reminders are accessed via CalDAV (VTODO protocol) — basic operations work well (title, due date, priority, notes, completion). Modern Apple Reminders features like subtasks, tags, smart lists, and location-based reminders are not available via CalDAV.
+- Pear accesses only legacy reminder data exposed through CalDAV `VTODO`. It cannot access Apple's upgraded Reminders store, not merely its advanced features.
+- Apple may return migration placeholders such as "Where are my reminders?" instead of current reminders. Explain this limitation; do not present placeholders or an empty response as proof that the user has no current tasks.
+- A successful Calendar connection does not verify Reminders access. Reconnecting or replacing the app-specific password does not overcome this boundary.
 - Priority values: `1` = high, `5` = medium, `9` = low, `0` = none
 - To list only incomplete reminders, use `includeCompleted: false` (default)
 - Reminder lists are auto-created if they don't exist when using `listName`
@@ -182,7 +187,7 @@ Pear generates all-day birthday events from contact birthday fields. These appea
 
 Pear does not currently expose a single dedicated briefing tool in the hosted MCP surface. Build daily briefings by combining:
 - `pear_list_events` for the chosen day
-- `pear_list_reminders` for incomplete tasks
+- `pear_list_reminders` for incomplete legacy reminders only, when the tool is available and legacy access is relevant
 - `pear_list_emails` for unread inbox context when Mail matters
 
 The `/pear:briefing` command in this plugin already follows that pattern.
@@ -201,6 +206,9 @@ The `/pear:briefing` command in this plugin already follows that pattern.
 | Batch create operations | Creates up to 50 items | Confirm count and summarize before executing |
 
 ### Data Safety
+
+- Ordinary provider reads fetch records live and process them in memory; Pear does not maintain a synced content database.
+- Pear stores encrypted provider credentials/tokens, connection and operational metadata, and persisted approved-write records that can include exact action content and provider receipts. Do not promise that no data is stored. See [data handling](https://pearmcp.com/data-handling) and [privacy](https://pearmcp.com/privacy) for retention and deletion details.
 
 - **Read operations are always safe** — listing, searching, and briefings have no side effects
 - **Updates merge, not replace** — `pear_update_contact` preserves fields you don't mention
@@ -230,7 +238,7 @@ Event creation failed mid-request or timed out:
 ```
 User: "What's on my plate today?"
 → Call pear_list_events for today with timezone
-→ Call pear_list_reminders for incomplete tasks
+→ If legacy reminder access is relevant and the tool is available, call pear_list_reminders; explain that upgraded Apple Reminders are unavailable
 → Optionally call pear_list_emails for unread inbox context
 → Summarize events chronologically, then pending reminders, then important unread mail
 ```
@@ -246,7 +254,8 @@ User: "Find time for a 1-hour meeting this week"
 ### Quick Reminder
 ```
 User: "Remind me to call the dentist tomorrow"
-→ Call pear_create_reminder with title and dueDate set to tomorrow
+→ Explain that this connection supports legacy CalDAV reminders only
+→ Only if the user wants a legacy reminder and the tool is available, follow the exposed approval workflow to create it; do not claim it will appear in upgraded Apple Reminders
 ```
 
 ### Contact Lookup
