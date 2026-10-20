@@ -32,7 +32,15 @@ Pear is a hosted MCP server that connects Claude Code to your iCloud Calendar, C
 
 Works on **macOS, Linux, and Windows** via CalDAV/CardDAV for Calendar, legacy reminders, and Contacts, plus IMAP/SMTP for iCloud Mail. No Apple hardware required.
 
-## Install
+## Cursor editor plugin
+
+The repository also includes a separate [Pear MCP plugin for Cursor](plugins/pear-mcp/README.md)
+with per-member OAuth for Apple iCloud and Microsoft 365. It does not require a
+Pear API key. Follow that guide for installation, supported capabilities, and the
+current native-client verification status. The Claude Code and OpenClaw setup
+below continues to use the existing API-key configuration.
+
+## Install for Claude Code or OpenClaw
 
 ### 1. Get a Pear API Key
 
@@ -92,6 +100,8 @@ This repo is intentionally small. Each top-level path maps to a specific client 
 | Path | Purpose |
 |------|---------|
 | [`.claude-plugin/`](.claude-plugin) | Claude plugin and marketplace metadata |
+| [`.cursor-plugin/`](.cursor-plugin) | Cursor marketplace metadata |
+| [`plugins/pear-mcp/`](plugins/pear-mcp) | Cursor editor plugin with per-member OAuth |
 | [`commands/`](commands) | Claude slash commands such as `/pear:briefing` |
 | [`skills/pear-icloud/`](skills/pear-icloud) | OpenClaw skill definition |
 | [`.mcp.json`](.mcp.json) | Direct MCP server config template |

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "pear": {
+      "url": "https://pearmcp.com/api/mcp",
+      "auth": {
+        "CLIENT_ID": "pear_oauth_grok_bot"
+      }
+    }
+  }
+}

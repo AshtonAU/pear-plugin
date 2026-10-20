@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Pear">
+  <path fill="#214B34" d="M59 28c-1-6-1-12 0-17 1-3 9-3 10 0l-2 14C75 9 87 9 97 17c2 2 2 3 0 5-9 10-20 11-30 5Z"/>
+  <path fill="#C3D747" d="M62 25c-15 0-20 12-23 27-3 13-16 27-17 42-2 20 14 31 40 31 27 0 45-13 43-34-2-16-15-28-20-40-5-14-8-26-23-26Z" transform="translate(0 -4)"/>
+  <g fill="#214B34">
+    <ellipse cx="48" cy="77" rx="3.6" ry="5"/>
+    <ellipse cx="79" cy="77" rx="3.6" ry="5"/>
+  </g>
+  <path d="M58 85q6 5 12 0" fill="none" stroke="#214B34" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
