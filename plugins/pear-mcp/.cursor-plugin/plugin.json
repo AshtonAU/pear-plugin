@@ -1,0 +1,19 @@
+{
+  "name": "pear-mcp",
+  "version": "1.0.0",
+  "description": "Connect Cursor to Apple iCloud and Microsoft 365 through Pear MCP with per-member OAuth.",
+  "author": {
+    "name": "Pear",
+    "email": "support@pearmcp.com"
+  },
+  "homepage": "https://pearmcp.com",
+  "keywords": [
+    "pear",
+    "mcp",
+    "cursor",
+    "icloud",
+    "microsoft-365"
+  ],
+  "logo": "assets/pear.svg",
+  "repository": "https://github.com/AshtonAU/pear-plugin"
+}
