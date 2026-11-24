@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Official Pear plugin and skill installs for Apple iCloud and Microsoft 365 Calendar, Contacts, Mail and tasks; upgraded Apple Reminders are not supported",
-    "version": "1.1.1"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "pear",
       "source": "./",
       "description": "Official Pear integration for Claude Code: Apple iCloud and Microsoft 365 Calendar, Contacts, Mail and tasks through hosted MCP tools. iCloud reminders are legacy CalDAV only; upgraded Apple Reminders are not supported.",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "category": "productivity",
       "tags": ["icloud", "apple", "calendar", "reminders", "contacts", "mail", "caldav", "carddav", "imap", "smtp", "scheduling", "mcp", "microsoft-365", "outlook", "todo"]
     }
