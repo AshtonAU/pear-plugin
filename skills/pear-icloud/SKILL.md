@@ -1,6 +1,6 @@
 ---
-name: Pear - iCloud Calendar, Reminders, Contacts & Mail
-description: iCloud Calendar, Contacts, Mail, and legacy CalDAV reminders through Pear hosted MCP tools. Upgraded Apple Reminders are not supported. Tool availability depends on the connected account and permissions.
+name: Pear - iCloud and Microsoft 365 Calendar, Contacts, Mail & Tasks
+description: Apple iCloud and Microsoft 365 Calendar, Contacts, Mail, Microsoft To Do and legacy iCloud CalDAV reminders through Pear hosted MCP tools. Upgraded Apple Reminders are not supported. Tool availability depends on the connected account and permissions.
 homepage: https://pearmcp.com
 metadata:
   openclaw:
@@ -13,9 +13,9 @@ metadata:
         - pearmcp.com
 ---
 
-# Pear — iCloud Integration
+# Pear — iCloud and Microsoft 365
 
-Pear provides hosted MCP access to iCloud Calendar, Contacts, Mail, and legacy CalDAV reminder data. Tools are prefixed with `pear_`. Calendar and legacy reminders use CalDAV; Contacts use CardDAV; Mail uses IMAP/SMTP. Apple's upgraded Reminders store is not accessible through this connection.
+Pear provides hosted MCP access to Apple iCloud and Microsoft 365. With iCloud: Calendar, Contacts, Mail and legacy CalDAV reminder data (Calendar and legacy reminders use CalDAV, Contacts use CardDAV, Mail uses IMAP/SMTP). With Microsoft 365: Outlook Calendar, Outlook Mail, Contacts and Microsoft To Do through Microsoft Graph. Tools are prefixed with `pear_`. Apple's upgraded Reminders store is not accessible through this connection. When more than one account is connected, call `pear_provider_status` and pass the chosen `provider` and `accountId` explicitly; Apple uses `accountId: "apple"`.
 
 The visible tool subset depends on connected providers, granted scopes, account readiness, plan, and enabled capabilities. Discover tools and their current schemas from the connected client before calling them. The examples below are not a complete or guaranteed tool catalogue; follow the write-approval workflow exposed by the connection. See the [current tool reference](https://pearmcp.com/mcp-tools).
 
@@ -26,7 +26,8 @@ The visible tool subset depends on connected providers, granted scopes, account 
 - Create, update, or delete calendar events
 - Manage legacy reminder data that Apple still exposes through CalDAV, with the limitation explained first
 - Look up, create, or update contacts
-- Read, send, or organize iCloud Mail
+- Read, send, or organize iCloud Mail or Outlook Mail
+- Manage Microsoft To Do lists and tasks
 - Find free time slots or schedule meetings
 - Build a daily briefing from events, reminders, and unread email
 - Check availability for a specific time
@@ -56,7 +57,7 @@ The visible tool subset depends on connected providers, granted scopes, account 
 - `PEAR_API_KEY` — Your Pear API key (format: `pear_sk_...`)
   - Sign up at [pearmcp.com](https://pearmcp.com)
   - Generate an API key from the dashboard
-  - Connect your iCloud account (requires an [app-specific password](https://support.apple.com/en-us/102654))
+  - Connect iCloud (requires an [app-specific password](https://support.apple.com/en-us/102654)) or Microsoft 365 (Microsoft sign-in)
 
 **Optional:**
 - `PEAR_MCP_URL` — Custom endpoint URL (defaults to `https://pearmcp.com/api/mcp`)
@@ -67,7 +68,7 @@ The visible tool subset depends on connected providers, granted scopes, account 
 
 | Tool | Description |
 |------|-------------|
-| `pear_list_calendars` | List all iCloud calendars (including read-only subscriptions) |
+| `pear_list_calendars` | List calendars for the selected iCloud or Microsoft 365 account (including read-only subscriptions) |
 | `pear_list_events` | List events in a time range, with pagination and calendar filtering |
 | `pear_search_events` | Search events by title or description within a date range |
 | `pear_create_event` | Create an event with optional recurrence, alarms, attendees, and location |

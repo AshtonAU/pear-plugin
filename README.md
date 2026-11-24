@@ -89,7 +89,9 @@ Already installed the marketplace? Refresh it with:
 ## What You Get
 
 - Hosted MCP tools across Calendar, Contacts, Mail, tasks (Microsoft To Do or legacy iCloud reminders), scheduling, and batch operations; the visible subset depends on connected providers, granted scopes, account readiness, plan, and enabled capabilities
-- Claude slash commands for common flows like setup, briefing, and scheduling
+- Claude slash commands for common flows like setup, briefing, scheduling, finding a time and mail triage
+- Workflow skills for connection checks, account selection, morning briefs, finding a time, mail triage, reply drafts and reviewed changes
+- A `pear-assistant` agent for multi-step calendar, mail and contact requests
 - One OpenClaw skill for users who want the same Pear integration outside Claude Code
 - A direct MCP config via [.mcp.json](.mcp.json) for manual setups
 
@@ -103,7 +105,9 @@ This repo is intentionally small. Each top-level path maps to a specific client 
 | [`.cursor-plugin/`](.cursor-plugin) | Cursor marketplace metadata |
 | [`plugins/pear-mcp/`](plugins/pear-mcp) | Cursor editor plugin with per-member OAuth |
 | [`commands/`](commands) | Claude slash commands such as `/pear:briefing` |
-| [`skills/pear-icloud/`](skills/pear-icloud) | OpenClaw skill definition |
+| [`agents/`](agents) | The `pear-assistant` agent |
+| [`skills/pear-icloud/`](skills/pear-icloud) | Main Pear skill (also the OpenClaw skill definition) |
+| [`skills/`](skills) | Workflow skills: connection check, account selection, morning brief, find time, mail triage, reply draft, reviewed changes |
 | [`.mcp.json`](.mcp.json) | Direct MCP server config template |
 | [`README.md`](README.md) | User-facing install and usage guide |
 
@@ -126,6 +130,8 @@ This is an overview, not a fixed tool count or a guarantee that every tool is av
 |---------|-------------|
 | `/pear:briefing` | Today's events and available legacy reminders at a glance |
 | `/pear:schedule` | Find the best time for a meeting |
+| `/pear:find-time` | Suggest meeting times across selected calendars, without booking |
+| `/pear:triage` | Group recent mail in one folder into replies, follow-ups and information, without changing the mailbox |
 | `/pear:pear-setup` | Verify your connection |
 
 ## Highlights

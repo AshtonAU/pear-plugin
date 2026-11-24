@@ -1,7 +1,7 @@
 {
   "name": "pear",
   "description": "Official Pear integration for Claude Code: Apple iCloud and Microsoft 365 Calendar, Contacts, Mail and tasks through hosted MCP tools. iCloud reminders are legacy CalDAV only; upgraded Apple Reminders are not supported.",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": {
     "name": "Pear",
     "url": "https://pearmcp.com"
